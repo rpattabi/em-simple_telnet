@@ -160,6 +160,7 @@ class EventMachine::Protocols::SimpleTelnet < EventMachine::Connection
     connect_timeout: 3,
     timeout: 10,
     wait_time: 0,
+    keep_alive: false,
     bin_mode: false,
     telnet_mode: true,
     output_log: nil,
@@ -286,7 +287,7 @@ class EventMachine::Protocols::SimpleTelnet < EventMachine::Connection
       ensure
         # Use #close so a subclass can execute some kind of logout command
         # before the connection is closed.
-        connection.close
+        connection.close unless opts[:keep_alive]
       end
 
       return connection
